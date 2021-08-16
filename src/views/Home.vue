@@ -5,8 +5,9 @@
         :space-between="50"
         :autoplay='{
             "delay": 2500,
-            "disableOnInteraction": false
+            "disableOnInteraction": true
         }'
+        @swiper="onSwiper"
     >
         <swiper-slide><Table /></swiper-slide>
         <swiper-slide><Table /></swiper-slide>
@@ -57,11 +58,18 @@
                     isFull.value = true;
                 }
             });
+
+            /**Disable / enable ability move slider by grabbing it with mouse or by touching 
+             * it with finger (on touch screens) by assigning false / true to this property */
+            const onSwiper = swiper => {
+                swiper.allowTouchMove = false;
+            }
             
 
             return {
                 isFull, 
                 full,
+                onSwiper
             }
         }
     }
