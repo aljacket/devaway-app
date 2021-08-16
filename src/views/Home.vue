@@ -4,14 +4,14 @@
         :slides-per-view="1"
         :space-between="50"
         :autoplay='{
-            "delay": 2500,
+            "delay": 3500,
             "disableOnInteraction": true
         }'
         @swiper="onSwiper"
     >
         <swiper-slide><Table /></swiper-slide>
-        <swiper-slide><Table /></swiper-slide>
-        <swiper-slide><Table /></swiper-slide>
+        <!-- <swiper-slide><Table /></swiper-slide>
+        <swiper-slide><Pilot /></swiper-slide> -->
        
     </swiper>
     
@@ -27,6 +27,7 @@
 <script>
     import { ref } from 'vue';
     import Table from '@/components/Table.vue';
+    import Pilot from '@/components/Pilot.vue';
     import { openFullscreen }  from '@/utils/fullscreen';
 
     import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -34,15 +35,19 @@
     import SwiperCore, { Autoplay } from 'swiper/core';
     SwiperCore.use([Autoplay]);
 
+    import drivers_kart from "@/data/drivers_karts_Front.json";
+
     export default {
         name: 'Home',
         components: {
             Table,
+            Pilot,
             Swiper,
             SwiperSlide,
         },
         setup() {
-            const isFull = ref(false);
+            const isFull = ref(false);                       
+            const allDriversKart = drivers_kart;
 
             const full = () => {
                 openFullscreen();
@@ -67,6 +72,7 @@
             
 
             return {
+                allDriversKart,
                 isFull, 
                 full,
                 onSwiper
