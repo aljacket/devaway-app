@@ -29,7 +29,7 @@
                                     </div>
                                 </td>
                                 <td class="py-3 px-2 text-left">
-                                    {{stampToHours(driver.races)}}
+                                    {{formattedHours(driver.races)}}
                                 </td> 
                             </tr>
                         </tbody>
@@ -62,7 +62,7 @@
                                     </div>
                                 </td>
                                 <td class="py-3 px-2 text-left">
-                                    {{stampToHours(driver.races)}}
+                                    {{formattedHours(driver.races)}}
                                 </td> 
                             </tr>
                         </tbody>
@@ -74,35 +74,57 @@
 </template>
 
 <script>
+    import { computed } from "vue";
     import drivers_kart from "@/data/drivers_karts_Front.json";
     import { stampToHours } from "@/utils/time";
 
     export default {
         name: 'Table',
-        data() {
-            return {
-                drivers: drivers_kart,
-                races: drivers_kart[0].races,
-                half_length: Math.ceil(drivers_kart.length/2)
-            }
-        },
-        computed: {
-            formattedRaces() {
-                return this.drivers.map(driver => {
-                    const timestamp = this.totalRaces(driver.races);
-                    driver.races = timestamp;
-                    return driver;
-                }).sort(function (a, b){return a.races-b.races});
-            },
-            leftSide() {
-                return this.formattedRaces.splice(0, this.half_length);
-            },
-            rightSide() {
-                return this.formattedRaces.splice(-this.half_length);
-            }
-        },
-        methods: {
-            totalRaces(races){
+        // data() {
+        //     return {
+        //         drivers: drivers_kart,
+        //         races: drivers_kart[0].races,
+        //         half_length: Math.ceil(drivers_kart.length/2)
+        //     }
+        // },
+        // computed: {
+        //     formattedRaces() {
+        //         return this.drivers.map(driver => {
+        //             const timestamp = this.totalRaces(driver.races);
+        //             driver.races = timestamp;
+        //             return driver;
+        //         }).sort(function (a, b){return a.races-b.races});
+        //     },
+        //     leftSide() {
+        //         return this.formattedRaces.splice(0, this.half_length);
+        //     },
+        //     rightSide() {
+        //         return this.formattedRaces.splice(-this.half_length);
+        //     }
+        // },
+        // methods: {
+        //     totalRaces(races){
+        //         let datestamp = 0;
+        //         races.forEach(race => {
+        //             const time = race.time.split(':');
+        //             const milliseconds = race.time.split('.');
+                    
+        //             const date = new Date(0,0,0, time[0], time[1], time[2]).setMilliseconds(milliseconds[1]);
+
+        //             datestamp += date;
+        //         })                
+
+        //         return datestamp;
+        //     },
+        //     stampToHours(datestamp) {
+        //         return stampToHours(datestamp);
+        //     }
+        // }
+        setup() {
+            const drivers = drivers_kart;
+            const half_length = Math.ceil(drivers_kart.length/2);
+
+            const totalRaces = races => {
                 let datestamp = 0;
                 races.forEach(race => {
                     const time = race.time.split(':');
@@ -114,24 +136,31 @@
                 })                
 
                 return datestamp;
-            },
-            stampToHours(datestamp) {
+            }
+
+            const formattedHours = datestamp => {
                 return stampToHours(datestamp);
             }
-        }
-        // setup() {
-        //     const drivers = drivers_kart;
 
-        //     const half_length = Math.ceil(drivers.length/2);
-        //     const leftSide = drivers.splice(0, half_length);
-        //     const rightSide = drivers.splice(-half_length);
+            const formattedRaces = drivers.map(driver => {
+                    const timestamp = totalRaces(driver.races);
+                    driver.races = timestamp;
+                    return driver;
+                }).sort(function (a, b){return a.races-b.races});
+                    
+            const leftSide = computed(() => {
+                return formattedRaces.splice(0, half_length);
+            });
 
-        //     // console.log('leftSide', races.value);
+            const rightSide = computed(() => {
+                return formattedRaces.splice(-half_length);
+            });            
             
-        //     return {
-        //         leftSide,
-        //         rightSide
-        //     }
-        // }
+            return {
+                leftSide,
+                rightSide,
+                formattedHours
+            }
+        }
     }
 </script>
