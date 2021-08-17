@@ -29,7 +29,7 @@
                                     </div>
                                 </td>
                                 <td class="py-3 px-2 text-left">
-                                    {{formattedHours(driver.races)}}
+                                    {{formattedHours(driver.total)}}
                                 </td> 
                             </tr>
                         </tbody>
@@ -62,7 +62,7 @@
                                     </div>
                                 </td>
                                 <td class="py-3 px-2 text-left">
-                                    {{formattedHours(driver.races)}}
+                                    {{formattedHours(driver.total)}}
                                 </td> 
                             </tr>
                         </tbody>
@@ -74,15 +74,15 @@
 </template>
 
 <script>
-    import { computed } from "vue";
+    import { computed, ref } from "vue";
     import drivers_kart from "@/data/drivers_karts_Front.json";
     import { stampToHours } from "@/utils/time";
 
     export default {
         name: 'Table',        
         setup() {
-            const drivers = drivers_kart;
-            const half_length = Math.ceil(drivers_kart.length/2);
+            const drivers = ref(drivers_kart);
+            const half_length = ref(Math.ceil(drivers_kart.length/2));
 
             const totalRaces = races => {
                 let datestamp = 0;
@@ -104,18 +104,18 @@
                 return stampToHours(datestamp);
             }
 
-            const formattedRaces = computed(() => drivers.map(driver => {
+            const formattedRaces = computed(() => drivers.value.map(driver => {
                     const timestamp = totalRaces(driver.races);
-                    driver.races = timestamp;
+                    driver.total = timestamp;
                     return driver;
                 }).sort(function (a, b){return a.races-b.races}));
                     
             const leftSide = computed(() => {
-                return formattedRaces.value.splice(0, half_length);
+                return formattedRaces.value.splice(0, half_length.value);
             });
 
             const rightSide = computed(() => {
-                return formattedRaces.value.splice(-half_length);
+                return formattedRaces.value.splice(-half_length.value);
             });    
                         
             return {

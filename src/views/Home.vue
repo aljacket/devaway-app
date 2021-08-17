@@ -5,7 +5,7 @@
         :space-between="50"
         :autoplay='{
             "delay": 3500,
-            "disableOnInteraction": true
+            "disableOnInteraction": false
         }'
         @swiper="onSwiper"
     >
@@ -13,9 +13,12 @@
         <swiper-slide><Table /></swiper-slide>
 
         <!-- races chart -->
-        
+        <swiper-slide v-for="race, index in races" :key="index">
+            <Race :index="index" />
+        </swiper-slide>
+
         <!-- pilots chart -->
-        <swiper-slide><Pilot :json="allDriversKart"/></swiper-slide>
+        <!-- <swiper-slide><Pilot :json="allDriversKart"/></swiper-slide> -->
        
     </swiper>
     
@@ -31,6 +34,7 @@
 <script>
     import { ref } from 'vue';
     import Table from '@/components/Table.vue';
+    import Race from '@/components/Race.vue';
     import Pilot from '@/components/Pilot.vue';
     import { openFullscreen }  from '@/utils/fullscreen';
 
@@ -46,12 +50,14 @@
         components: {
             Table,
             Pilot,
+            Race,
             Swiper,
             SwiperSlide,
         },
         setup() {
             const isFull = ref(false);                       
-            const allDriversKart = drivers_kart;
+            const allDriversKart = ref(drivers_kart);
+            const races = ref(drivers_kart[0].races);
 
             const full = () => {
                 openFullscreen();
@@ -77,6 +83,7 @@
 
             return {
                 allDriversKart,
+                races,
                 isFull, 
                 full,
                 onSwiper
