@@ -79,61 +79,23 @@
     import { stampToHours } from "@/utils/time";
 
     export default {
-        name: 'Table',
-        // data() {
-        //     return {
-        //         drivers: drivers_kart,
-        //         races: drivers_kart[0].races,
-        //         half_length: Math.ceil(drivers_kart.length/2)
-        //     }
-        // },
-        // computed: {
-        //     formattedRaces() {
-        //         return this.drivers.map(driver => {
-        //             const timestamp = this.totalRaces(driver.races);
-        //             driver.races = timestamp;
-        //             return driver;
-        //         }).sort(function (a, b){return a.races-b.races});
-        //     },
-        //     leftSide() {
-        //         return this.formattedRaces.splice(0, this.half_length);
-        //     },
-        //     rightSide() {
-        //         return this.formattedRaces.splice(-this.half_length);
-        //     }
-        // },
-        // methods: {
-        //     totalRaces(races){
-        //         let datestamp = 0;
-        //         races.forEach(race => {
-        //             const time = race.time.split(':');
-        //             const milliseconds = race.time.split('.');
-                    
-        //             const date = new Date(0,0,0, time[0], time[1], time[2]).setMilliseconds(milliseconds[1]);
-
-        //             datestamp += date;
-        //         })                
-
-        //         return datestamp;
-        //     },
-        //     stampToHours(datestamp) {
-        //         return stampToHours(datestamp);
-        //     }
-        // }
+        name: 'Table',        
         setup() {
             const drivers = drivers_kart;
             const half_length = Math.ceil(drivers_kart.length/2);
 
             const totalRaces = races => {
                 let datestamp = 0;
-                races.forEach(race => {
-                    const time = race.time.split(':');
-                    const milliseconds = race.time.split('.');
-                    
-                    const date = new Date(0,0,0, time[0], time[1], time[2]).setMilliseconds(milliseconds[1]);
-
-                    datestamp += date;
-                })                
+                if(races.length){
+                    races.forEach(race => {
+                        const time = race.time.split(':');
+                        const milliseconds = race.time.split('.');
+                        
+                        const date = new Date(0,0,0, time[0], time[1], time[2]).setMilliseconds(milliseconds[1]);
+    
+                        datestamp += date;
+                    })
+                }
 
                 return datestamp;
             }
@@ -142,20 +104,20 @@
                 return stampToHours(datestamp);
             }
 
-            const formattedRaces = drivers.map(driver => {
+            const formattedRaces = computed(() => drivers.map(driver => {
                     const timestamp = totalRaces(driver.races);
                     driver.races = timestamp;
                     return driver;
-                }).sort(function (a, b){return a.races-b.races});
+                }).sort(function (a, b){return a.races-b.races}));
                     
             const leftSide = computed(() => {
-                return formattedRaces.splice(0, half_length);
+                return formattedRaces.value.splice(0, half_length);
             });
 
             const rightSide = computed(() => {
-                return formattedRaces.splice(-half_length);
-            });            
-            
+                return formattedRaces.value.splice(-half_length);
+            });    
+                        
             return {
                 leftSide,
                 rightSide,

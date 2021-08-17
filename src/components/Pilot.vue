@@ -7,7 +7,7 @@
                     alt="Profile picture" />
                 <div class="text-center absolute w-full" style="bottom: -30px">
                     <div class="mb-10">
-                    <p class="text-white tracking-wide uppercase text-lg font-bold">Witch</p>
+                    <p class="text-white tracking-wide uppercase text-lg font-bold">{{name}}</p>
                     <p class="text-gray-400 text-sm">@witch_forever</p>
                     </div>
                     <button class="p-4 rounded-full transition ease-in duration-200 focus:outline-none">
@@ -39,6 +39,18 @@
 
 <script>
     export default {
+        props: {
+            json: {
+                type: Array,
+                default: () => []
+            }
+        },
+        setup(props){
+            const name = props.json[0].name;
 
+            return{
+                name
+            }
+        }
     }
 </script>

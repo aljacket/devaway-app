@@ -9,9 +9,13 @@
         }'
         @swiper="onSwiper"
     >
+        <!-- general chart -->
         <swiper-slide><Table /></swiper-slide>
-        <!-- <swiper-slide><Table /></swiper-slide>
-        <swiper-slide><Pilot /></swiper-slide> -->
+
+        <!-- races chart -->
+        
+        <!-- pilots chart -->
+        <swiper-slide><Pilot :json="allDriversKart"/></swiper-slide>
        
     </swiper>
     
