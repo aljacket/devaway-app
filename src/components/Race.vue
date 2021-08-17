@@ -46,7 +46,7 @@
                     </thead>
                     <tbody class="text-gray-600 text-xs font-light">
                         <tr v-for="driver, index in rightSide" :key="driver._id" class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-3 text-left">{{ index+1 }}</td>
+                            <td class="py-3 px-3 text-left">{{ index+1+leftSide.length }}</td>
                             <td class="py-3 px-3 text-left">
                                 <div class="flex items-center">
                                     <div class="mr-2">
@@ -82,10 +82,6 @@
             index: {
                 type: Number,
                 default: null
-            },
-            drivers: {
-                type: Array,
-                default: () => []
             }
         },
         setup(props){
