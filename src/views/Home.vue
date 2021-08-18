@@ -18,7 +18,9 @@
         </swiper-slide>
 
         <!-- pilots chart -->
-        <!-- <swiper-slide><Pilot :json="allDriversKart"/></swiper-slide> -->
+        <swiper-slide v-for="driver in allDriversKart" :key="driver._id">
+            <Pilot :driver="driver"/>
+        </swiper-slide>
        
     </swiper>
     

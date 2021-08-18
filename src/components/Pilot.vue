@@ -1,14 +1,15 @@
 <template>
     <!-- component -->
-    <div class="w-screen h-screen flex justify-center items-center">        
-        <div class="container mx-auto max-w-xs rounded-lg overflow-hidden shadow-lg my-2 bg-white">
-            <div class="relative mb-6">
+    <div class="w-screen h-screen flex items-center justify-center">        
+        <div class="mx-auto flex items-center justify-center rounded-lg overflow-hidden shadow-lg my-2 bg-white">
+            <div class="relative">
                 <img class="w-full" src="https://unsplash.com/photos/PElJMFWV3kk/download?force=true&w=640"
                     alt="Profile picture" />
                 <div class="text-center absolute w-full" style="bottom: -30px">
                     <div class="mb-10">
-                    <p class="text-white tracking-wide uppercase text-lg font-bold">{{name}}</p>
-                    <p class="text-gray-400 text-sm">@witch_forever</p>
+                    <p class="text-white tracking-wide uppercase text-lg font-bold">{{driver.name}}</p>
+                    <p class="text-gray-400 text-sm">{{ driver.age }}</p>
+                    <p class="text-white tracking-wide uppercase text-lg font-bold">{{driver.team}}</p>
                     </div>
                     <button class="p-4 rounded-full transition ease-in duration-200 focus:outline-none">
                     <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6">
@@ -19,19 +20,25 @@
                     </button>
                 </div>
             </div>
-            <div class="py-10 px-6 text-center tracking-wide grid grid-cols-3 gap-6">
-                <div class="posts">
-                    <p class="text-lg">324</p>
-                    <p class="text-gray-400 text-sm">Posts</p>
-                </div>
-                <div class="followers">
-                    <p class="text-lg">7542</p>
-                    <p class="text-gray-400 text-sm">Followers</p>
-                </div>
-                <div class="following">
-                    <p class="text-lg">295</p>
-                    <p class="text-gray-400 text-sm">Following</p>
-                </div>
+            <div class="w-full h-full text-center">
+               <table class="min-w-max w-full table-auto">
+                   <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-xs leading-normal">
+                            <th class="py-3 px-3 text-left">Race</th>
+                            <th class="py-3 px-3 text-left">Time</th>
+                        </tr>
+                    </thead>
+                   <tbody class="text-gray-600 text-xs font-light">
+                        <tr v-for="race, index in races" :key="index" class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-3 text-left">{{ race.name }}</td>                            
+                            <td class="py-3 px-3 text-left">
+                                <div class="flex items-center">
+                                    <span>{{race.time}}</span>
+                                </div>
+                            </td> 
+                        </tr>
+                    </tbody>
+               </table>
             </div>
         </div>
     </div>
@@ -40,16 +47,18 @@
 <script>
     export default {
         props: {
-            json: {
-                type: Array,
-                default: () => []
+            driver: {
+                type: Object,
+                default: () => ({})
             }
         },
         setup(props){
-            const name = props.json[0].name;
+            const races = props.driver.races;
+            const driver = props.driver;
 
             return{
-                name
+                driver,
+                races
             }
         }
     }
