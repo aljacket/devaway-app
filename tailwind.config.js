@@ -4,11 +4,16 @@ module.exports = {
     purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            backgroundImage: theme => ({
+                'racing': "url('./src/assets/img/background.jpg')",
+            })
+        },
         fontSize: {
             'xs': '.55rem',
             'sm': '.65rem',
             'ms': '.75rem',
+            'xl': '1.50rem'
         },
         fontFamily: {
             sans: [
