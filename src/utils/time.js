@@ -15,3 +15,17 @@ export function stampToHours (datestamp) {
 
     return `${hour}:${minutes}:${seconds}.${milliseconds}`;
 }
+
+export function sumOfTimes(arrayTimes) {
+    let datestamp = 0;
+    arrayTimes.forEach(race => {
+            const time = race.time.split(':');
+            const milliseconds = race.time.split('.');
+            
+            const date = new Date(0,0,0, time[0], time[1], time[2]).setMilliseconds(milliseconds[1]);
+
+            datestamp += date;
+        })
+
+    return datestamp;
+}

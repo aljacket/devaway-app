@@ -8,7 +8,7 @@
                             <th class="py-3 px-3 text-left">#</th>
                             <th class="py-3 px-3 text-left">Name</th>
                             <th class="py-3 px-3 text-left">Team</th>
-                            <th class="py-3 px-3 text-left">Time</th>
+                            <th class="py-3 px-3 text-left">{{ix < 0 ? 'Total' : 'Time'}}</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-xs font-light">
@@ -17,7 +17,7 @@
                             <td class="py-3 px-3 text-left">
                                 <div class="flex items-center">
                                     <div class="mr-2">
-                                        <!-- <img class="w-6 h-6 rounded-full" :src="driver.picture"/> -->
+                                        <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
                                     </div>
                                     <span>{{driver.name}}</span>
                                 </div>
@@ -28,7 +28,7 @@
                                 </div>
                             </td>
                             <td class="py-3 px-2 text-left">
-                                {{ driver.races[ix].time }}
+                                {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
                             </td> 
                         </tr>
                     </tbody>
@@ -41,7 +41,7 @@
                             <th class="py-3 px-3 text-left">#</th>
                             <th class="py-3 px-3 text-left">Name</th>
                             <th class="py-3 px-3 text-left">Team</th>
-                            <th class="py-3 px-3 text-left">Time</th>
+                            <th class="py-3 px-3 text-left">{{ix < 0 ? 'Total' : 'Time'}}</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-xs font-light">
@@ -50,7 +50,7 @@
                             <td class="py-3 px-3 text-left">
                                 <div class="flex items-center">
                                     <div class="mr-2">
-                                        <!-- <img class="w-6 h-6 rounded-full" :src="driver.picture"/> -->
+                                        <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
                                     </div>
                                     <span>{{driver.name}}</span>
                                 </div>
@@ -61,7 +61,7 @@
                                 </div>
                             </td>
                             <td class="py-3 px-2 text-left">
-                                {{ driver.races[ix].time }}
+                                {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
                             </td> 
                         </tr>
                     </tbody>
@@ -74,26 +74,43 @@
 <script>
     import { computed, ref } from "vue";
     import drivers_kart from "@/data/drivers_karts_Front.json";
-    import { toTimestamp } from "@/utils/time";
+    import { toTimestamp, stampToHours, sumOfTimes } from "@/utils/time";
 
     export default {
         name:'Race',
         props: {
             index: {
                 type: Number,
-                default: null
+                default: -1
             }
         },
         setup(props){
             const ix = ref(props.index);
             const drivers = ref(drivers_kart);
             const half_length = ref(Math.ceil(drivers_kart.length/2));
+            const sortedRaces = ref([])
 
-            const sortedRaces = computed(() => drivers.value.map(driver => { return driver; })
-            .sort(function (a, b){
-                return toTimestamp(a.races[ix.value].time)-toTimestamp(b.races[ix.value].time)
-                })
+            const formattedHours = datestamp => {
+                return stampToHours(datestamp);
+            }
+            
+           
+            const formattedRaces = computed(() => drivers.value.map(driver => {
+                    if(ix.value < 0) {
+                        const timestamp = sumOfTimes(driver.races);
+                        driver.total = timestamp;
+                        return driver;
+                    } else {
+                        return driver;
+                    }
+                }) 
             );
+                
+            if(ix.value < 0) {
+                sortedRaces.value = formattedRaces.value.sort(function (a, b){return a.total-b.total})
+            } else {
+                sortedRaces.value = formattedRaces.value.sort(function (a, b){return toTimestamp(a.races[ix.value].time)-toTimestamp(b.races[ix.value].time)})
+            }    
 
             const leftSide = computed(() => {
                 return sortedRaces.value.splice(0, half_length.value);
@@ -102,12 +119,14 @@
             const rightSide = computed(() => {
                 return sortedRaces.value.splice(-half_length.value);
             });
+           
 
             return {
                 ix,
                 drivers,
                 leftSide,
-                rightSide
+                rightSide,
+                formattedHours
             }
         }
     }

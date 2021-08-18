@@ -10,7 +10,7 @@
         @swiper="onSwiper"
     >
         <!-- general chart -->
-        <swiper-slide><Table /></swiper-slide>
+        <swiper-slide><Race /></swiper-slide>
 
         <!-- races chart -->
         <swiper-slide v-for="race, index in races" :key="index">
@@ -35,7 +35,6 @@
 
 <script>
     import { ref } from 'vue';
-    import Table from '@/components/Table.vue';
     import Race from '@/components/Race.vue';
     import Pilot from '@/components/Pilot.vue';
     import { openFullscreen }  from '@/utils/fullscreen';
@@ -50,7 +49,6 @@
     export default {
         name: 'Home',
         components: {
-            Table,
             Pilot,
             Race,
             Swiper,
