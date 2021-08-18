@@ -1,5 +1,11 @@
 <template>
     <!-- <h1 class="w-full py-4 text-center font-bold">Kart Table</h1> -->
+    <!-- 
+        :autoplay='{
+            "delay": 3500,
+            "disableOnInteraction": false
+        }'
+     -->
     <swiper
         :slides-per-view="1"
         :space-between="50"
@@ -26,10 +32,10 @@
     
     <button 
         v-if="!isFull"
-        class="absolute bottom-0 right-0 m-4 rounded-full h-20 w-20 shadow-lg z-10"
+        class="absolute bottom-0 right-0 m-4 rounded-full h-20 w-20 shadow-lg z-10 flex items-center justify-center bg-white"
         @click="full"    
     >
-        FULL
+        <arrow-expand class="w-10 h-10 text-gray-600" />
     </button>
 </template>
 
@@ -45,6 +51,7 @@
     SwiperCore.use([Autoplay]);
 
     import drivers_kart from "@/data/drivers_karts_Front.json";
+import ArrowExpand from '@/assets/icon/arrowExpand.vue';
 
     export default {
         name: 'Home',
@@ -53,6 +60,7 @@
             Race,
             Swiper,
             SwiperSlide,
+                ArrowExpand,
         },
         setup() {
             const isFull = ref(false);                       

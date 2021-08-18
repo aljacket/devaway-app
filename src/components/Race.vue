@@ -1,20 +1,21 @@
 <template>
-    <div class="bg-gray-100 w-screen h-screen flex justify-center font-sans">
+    <div class="bg-gray-100 w-screen h-screen flex flex-col justify-center font-sans">
+        <p class="w-full text-center">{{ ix < 0 ? `Driver Standings` : `Race ${index}` }}</p>
         <div class="w-full lg:w-full flex items-center justify-center">
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-xs leading-normal">
-                            <th class="py-3 px-3 text-left">#</th>
-                            <th class="py-3 px-3 text-left">Name</th>
+                        <tr class="bg-gray-200 h-12 text-gray-600 uppercase text-ms leading-normal">
+                            <th class="py-3 px-3 text-center"></th>
+                            <th class="py-3 px-3 text-center">Name</th>
                             <th class="py-3 px-3 text-left">Team</th>
-                            <th class="py-3 px-3 text-left">{{ix < 0 ? 'Total' : 'Time'}}</th>
+                            <th class="py-3 px-3 text-left">Time</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-xs font-light">
-                        <tr v-for="driver, index in leftSide" :key="driver._id" class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-3 text-left">{{ index+1 }}</td>
-                            <td class="py-3 px-3 text-left">
+                        <tr v-for="driver, index in leftSide" :key="driver._id" class="h-11 border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-3 text-left text-green-500">{{ index+1 }}</td>
+                            <td class="py-3 px-3 w-44 text-left">
                                 <div class="flex items-center">
                                     <div class="mr-2">
                                         <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
@@ -22,12 +23,12 @@
                                     <span>{{driver.name}}</span>
                                 </div>
                             </td>
-                            <td class="py-3 px-3 text-left">
+                            <td class="py-3 px-3 w-40 text-left">
                                 <div class="flex items-center">
                                     <span>{{driver.team}}</span>
                                 </div>
                             </td>
-                            <td class="py-3 px-2 text-left">
+                            <td class="py-3 px-2 w-28 text-left">
                                 {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
                             </td> 
                         </tr>
@@ -37,17 +38,17 @@
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-xs leading-normal">
-                            <th class="py-3 px-3 text-left">#</th>
-                            <th class="py-3 px-3 text-left">Name</th>
+                        <tr class="bg-gray-200 h-12 text-gray-600 uppercase text-ms leading-normal">
+                            <th class="py-3 px-3 text-center"></th>
+                            <th class="py-3 px-3 text-center">Name</th>
                             <th class="py-3 px-3 text-left">Team</th>
-                            <th class="py-3 px-3 text-left">{{ix < 0 ? 'Total' : 'Time'}}</th>
+                            <th class="py-3 px-3 text-left">Time</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-xs font-light">
-                        <tr v-for="driver, index in rightSide" :key="driver._id" class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-3 text-left">{{ index+1+leftSide.length }}</td>
-                            <td class="py-3 px-3 text-left">
+                        <tr v-for="driver, index in rightSide" :key="driver._id" class="h-11 border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-3 text-left text-green-500">{{ index+1+leftSide.length }}</td>
+                            <td class="py-3 px-3 w-44 text-left">
                                 <div class="flex items-center">
                                     <div class="mr-2">
                                         <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
@@ -55,12 +56,12 @@
                                     <span>{{driver.name}}</span>
                                 </div>
                             </td>
-                            <td class="py-3 px-3 text-left">
+                            <td class="py-3 px-3 w-40 text-left">
                                 <div class="flex items-center">
                                     <span>{{driver.team}}</span>
                                 </div>
                             </td>
-                            <td class="py-3 px-2 text-left">
+                            <td class="py-3 px-2 w-28 text-left">
                                 {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
                             </td> 
                         </tr>
