@@ -97,17 +97,12 @@
 
             const formattedHours = datestamp => {
                 return stampToHours(datestamp);
-            }
-            
+            }           
            
             const formattedRaces = computed(() => drivers.value.map(driver => {
-                    if(ix.value < 0) {
-                        const timestamp = sumOfTimes(driver.races);
-                        driver.total = timestamp;
-                        return driver;
-                    } else {
-                        return driver;
-                    }
+                    const timestamp = sumOfTimes(driver.races);
+                    driver.total = timestamp;
+                    return driver;                    
                 }) 
             );
                 
@@ -115,7 +110,16 @@
                 sortedRaces.value = formattedRaces.value.sort(function (a, b){return a.total-b.total})
             } else {
                 sortedRaces.value = formattedRaces.value.sort(function (a, b){return toTimestamp(a.races[ix.value].time)-toTimestamp(b.races[ix.value].time)})
-            }    
+            }
+            
+            if(ix.value >= 0) {
+                sortedRaces.value.map((sortDriver, i) => {
+                    sortDriver.races[ix.value].position = i+1;
+                    // console.log('sort driver: ', sortDriver);
+                    return sortDriver;
+                })
+
+            }
 
             const leftSide = computed(() => {
                 return sortedRaces.value.splice(0, half_length.value);

@@ -1,8 +1,4 @@
 <template>
-    <!-- <h1 class="w-full py-4 text-center font-bold">Kart Table</h1> -->
-    <!-- 
-        
-     -->
     <swiper
         :slides-per-view="1"
         :space-between="50"
@@ -85,7 +81,6 @@ import ArrowExpand from '@/assets/icon/arrowExpand.vue';
                 swiper.allowTouchMove = false;
             }
             
-
             return {
                 allDriversKart,
                 races,

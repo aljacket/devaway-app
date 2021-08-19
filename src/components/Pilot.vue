@@ -25,12 +25,14 @@
                                         <tr class="bg-gray-600 text-gray-200 uppercase text-xs leading-normal">
                                             <th class="py-3 px-3 text-center">Race</th>
                                             <th class="py-3 px-3 text-center">Time</th>
+                                            <th class="py-3 px-3 text-center">Position</th>
                                         </tr>
                                     </thead>
                                 <tbody class="text-gray-600 text-xs font-light">
                                         <tr v-for="race, index in races" :key="index" class="border-b border-gray-200 hover:bg-gray-100">
                                             <td class="py-3 px-3 text-center">{{ race.name }}</td>                            
                                             <td class="py-3 px-3 text-center">{{race.time}}</td> 
+                                            <td class="py-3 px-3 text-center text-green-500">{{race.position}}</td> 
                                         </tr>
                                     </tbody>
                             </table> 
