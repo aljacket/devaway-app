@@ -53,7 +53,7 @@ import ArrowExpand from '@/assets/icon/arrowExpand.vue';
             Race,
             Swiper,
             SwiperSlide,
-                ArrowExpand,
+            ArrowExpand,
         },
         setup() {
             const isFull = ref(false);                       

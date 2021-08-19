@@ -5,20 +5,27 @@
                 {{ ix < 0 ? `Driver Standings` : `Race ${index}` }}
             </div>
             <div class="w-full flex items-center justify-center">
-                <div class="bg-white shadow-md rounded-l-lg my-6 opacity-90">
-                    <table class="min-w-max w-full table-auto">
+                <div 
+                    v-for="sideDirvers, index in sortedDrivers"
+                    :key="index"
+                    class="bg-white shadow-md  my-6 opacity-90"
+                >
+                    <table 
+                        class="w-full table-auto"
+                        :class="[index === 0 ? 'border-r-2': '']"
+                    >
                         <thead>
-                            <tr class="bg-gray-600 h-12 text-gray-200 uppercase text-ms">
-                                <th class="py-3 px-3 text-center"></th>
-                                <th class="py-3 px-3 text-center">Name</th>
-                                <th class="py-3 px-3 text-left">Team</th>
-                                <th class="py-3 px-3 text-left">Time</th>
+                            <tr class="bg-gray-600 h-auto text-gray-200 uppercase text-ms">
+                                <th class="p-3 text-center"></th>
+                                <th class="p-3 text-center">Name</th>
+                                <th class="p-3 text-left">Team</th>
+                                <th class="p-3 text-left">Time</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-xs font-light">
-                            <tr v-for="driver, index in leftSide" :key="driver._id" class="h-11 border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-3 text-left text-green-500">{{ index+1 }}</td>
-                                <td class="py-3 px-3 w-44 text-left">
+                            <tr v-for="driver, i in sideDirvers" :key="driver._id" class="h-auto border-b border-gray-200 hover:bg-gray-100">
+                                <td class="p-3 text-left text-green-500">{{ index === 0 ? i+1 : i+1+sortedDrivers[0].length }}</td>
+                                <td class="p-3 w-auto text-left">
                                     <div class="flex items-center">
                                         <div class="mr-2">
                                             <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
@@ -26,51 +33,18 @@
                                         <span>{{driver.name}}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-3 w-40 text-left">
+                                <td class="p-3 w-auto text-left">
                                     <div class="flex items-center">
                                         <span>{{driver.team}}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-2 w-28 text-left">
+                                <td class="p-3 w-auto text-left">
                                     {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
                                 </td> 
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="bg-white shadow-md rounded-r-lg my-6 opacity-90">
-                    <table class="min-w-max w-full table-auto">
-                        <thead>
-                            <tr class="bg-gray-600 h-12 text-gray-200 uppercase text-ms">
-                                <th class="py-3 px-3 text-center"></th>
-                                <th class="py-3 px-3 text-center">Name</th>
-                                <th class="py-3 px-3 text-left">Team</th>
-                                <th class="py-3 px-3 text-left">Time</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-600 text-xs font-light">
-                            <tr v-for="driver, index in rightSide" :key="driver._id" class="h-11 border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-3 text-left text-green-500">{{ index+1+leftSide.length }}</td>
-                                <td class="py-3 px-3 w-44 text-left">
-                                    <div class="flex items-center">
-                                        <div class="mr-2">
-                                            <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
-                                        </div>
-                                        <span>{{driver.name}}</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-3 w-40 text-left">
-                                    <div class="flex items-center">
-                                        <span>{{driver.team}}</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-2 w-28 text-left">
-                                    {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
-                                </td> 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                </div>                
             </div>
         </div>
     </div>   
@@ -109,16 +83,11 @@
             if(ix.value < 0) {
                 sortedRaces.value = formattedRaces.value.sort(function (a, b){return a.total-b.total})
             } else {
-                sortedRaces.value = formattedRaces.value.sort(function (a, b){return toTimestamp(a.races[ix.value].time)-toTimestamp(b.races[ix.value].time)})
-            }
-            
-            if(ix.value >= 0) {
+                sortedRaces.value = formattedRaces.value.sort(function (a, b){return toTimestamp(a.races[ix.value].time)-toTimestamp(b.races[ix.value].time)});
                 sortedRaces.value.map((sortDriver, i) => {
                     sortDriver.races[ix.value].position = i+1;
-                    // console.log('sort driver: ', sortDriver);
                     return sortDriver;
                 })
-
             }
 
             const leftSide = computed(() => {
@@ -128,14 +97,14 @@
             const rightSide = computed(() => {
                 return sortedRaces.value.splice(-half_length.value);
             });
-           
+            
+            const sortedDrivers = [leftSide.value, rightSide.value];
 
             return {
                 ix,
                 drivers,
-                leftSide,
-                rightSide,
-                formattedHours
+                formattedHours,
+                sortedDrivers
             }
         }
     }
