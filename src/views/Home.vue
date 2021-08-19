@@ -1,10 +1,7 @@
 <template>
     <!-- <h1 class="w-full py-4 text-center font-bold">Kart Table</h1> -->
     <!-- 
-        :autoplay='{
-            "delay": 3500,
-            "disableOnInteraction": false
-        }'
+        
      -->
     <swiper
         :slides-per-view="1"

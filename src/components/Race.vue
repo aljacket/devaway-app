@@ -1,14 +1,14 @@
 <template>
-    <div class="w-screen h-screen flex flex-col justify-center font-sans">
+    <div class="w-screen h-screen flex flex-col justify-center">
         <div class="w-full flex flex-col items-center justify-center">
-            <div class="bg-white shadow-md rounded-lg my-6 opacity-75 text-xl font-bold px-4">
+            <div class="bg-white shadow-md rounded-lg my-6 opacity-90 text-xl font-bold px-4">
                 {{ ix < 0 ? `Driver Standings` : `Race ${index}` }}
             </div>
             <div class="w-full flex items-center justify-center">
-                <div class="bg-white shadow-md rounded-l-lg my-6 opacity-75">
+                <div class="bg-white shadow-md rounded-l-lg my-6 opacity-90">
                     <table class="min-w-max w-full table-auto">
                         <thead>
-                            <tr class="bg-gray-200 h-12 text-gray-600 uppercase text-ms">
+                            <tr class="bg-gray-600 h-12 text-gray-200 uppercase text-ms">
                                 <th class="py-3 px-3 text-center"></th>
                                 <th class="py-3 px-3 text-center">Name</th>
                                 <th class="py-3 px-3 text-left">Team</th>
@@ -38,10 +38,10 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="bg-white shadow-md rounded-r-lg my-6 opacity-75">
+                <div class="bg-white shadow-md rounded-r-lg my-6 opacity-90">
                     <table class="min-w-max w-full table-auto">
                         <thead>
-                            <tr class="bg-gray-200 h-12 text-gray-600 uppercase text-ms">
+                            <tr class="bg-gray-600 h-12 text-gray-200 uppercase text-ms">
                                 <th class="py-3 px-3 text-center"></th>
                                 <th class="py-3 px-3 text-center">Name</th>
                                 <th class="py-3 px-3 text-left">Team</th>
