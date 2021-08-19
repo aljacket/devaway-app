@@ -3,7 +3,7 @@
         :slides-per-view="1"
         :space-between="50"
         :autoplay='{
-            "delay": 3500,
+            "delay": 5000,
             "disableOnInteraction": false
         }'
         @swiper="onSwiper"
