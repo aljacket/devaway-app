@@ -1,7 +1,7 @@
 <template>
     <div class="w-screen h-screen flex flex-col justify-center">
         <div class="w-full flex flex-col items-center justify-center">
-            <div class="bg-white shadow-md rounded-lg my-6 opacity-90 text-xl font-bold px-4">
+            <div class="bg-white shadow-md rounded-lg my-6 opacity-90 text-sm lg:text-xl font-bold px-4">
                 {{ ix < 0 ? `Driver Standings` : `Race ${index}` }}
             </div>
             <div class="w-full flex items-center justify-center">
@@ -15,16 +15,16 @@
                         :class="[index === 0 ? 'border-r-2': '']"
                     >
                         <thead>
-                            <tr class="bg-gray-600 h-auto text-gray-200 uppercase text-ms">
+                            <tr class="bg-gray-600 h-auto text-white uppercase text-xs lg:text-ms">
                                 <th class="p-3 text-center"></th>
                                 <th class="p-3 text-center">Name</th>
                                 <th class="p-3 text-left">Team</th>
                                 <th class="p-3 text-left">Time</th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-600 text-xs font-light">
+                        <tbody class="text-black text-xs lg:text-sm">
                             <tr v-for="driver, i in sideDirvers" :key="driver._id" class="h-auto border-b border-gray-200 hover:bg-gray-100">
-                                <td class="p-3 text-left text-green-500">{{ index === 0 ? i+1 : i+1+sortedDrivers[0].length }}</td>
+                                <td class="p-3 text-left text-green-600">{{ index === 0 ? i+1 : i+1+sortedDrivers[0].length }}</td>
                                 <td class="p-3 w-auto text-left">
                                     <div class="flex items-center">
                                         <div class="mr-2">
