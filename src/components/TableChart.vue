@@ -56,7 +56,7 @@
     import { toTimestamp, stampToHours, sumOfTimes } from "@/utils/time";
 
     export default {
-        name:'Race',
+        name:'TableChart',
         props: {
             index: {
                 type: Number,

@@ -9,16 +9,16 @@
         @swiper="onSwiper"
     >
         <!-- general chart -->
-        <swiper-slide><Race /></swiper-slide>
+        <swiper-slide><TableChart /></swiper-slide>
 
         <!-- races chart -->
         <swiper-slide v-for="race, index in races" :key="index">
-            <Race :index="index" />
+            <TableChart :index="index" />
         </swiper-slide>
 
         <!-- pilots chart -->
         <swiper-slide v-for="driver in allDriversKart" :key="driver._id">
-            <Pilot :driver="driver"/>
+            <DriverInfo :driver="driver"/>
         </swiper-slide>
        
     </swiper>
@@ -34,8 +34,8 @@
 
 <script>
     import { ref } from 'vue';
-    import Race from '@/components/Race.vue';
-    import Pilot from '@/components/Pilot.vue';
+    import TableChart from '@/components/TableChart.vue';
+    import DriverInfo from '@/components/DriverInfo.vue';
     import { openFullscreen }  from '@/utils/fullscreen';
 
     import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -49,8 +49,8 @@ import ArrowExpand from '@/assets/icon/arrowExpand.vue';
     export default {
         name: 'Home',
         components: {
-            Pilot,
-            Race,
+            DriverInfo,
+            TableChart,
             Swiper,
             SwiperSlide,
             ArrowExpand,

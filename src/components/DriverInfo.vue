@@ -45,6 +45,7 @@
 
 <script>
     export default {
+        name: 'DriverInfo',
         props: {
             driver: {
                 type: Object,
