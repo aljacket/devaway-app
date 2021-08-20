@@ -23,7 +23,7 @@
                             </tr>
                         </thead>
                         <tbody class="text-black text-xs lg:text-sm">
-                            <tr v-for="driver, i in sideDirvers" :key="driver._id" class="h-auto border-b border-gray-200 hover:bg-gray-100">
+                            <tr v-for="driver, i in sideDirvers" :key="driver._id" class="h-auto border-b border-gray-200 even:bg-gray-100">
                                 <td class="p-3 text-left text-green-600">{{ index === 0 ? i+1 : i+1+sortedDrivers[0].length }}</td>
                                 <td class="p-3 w-auto text-left">
                                     <div class="flex items-center">

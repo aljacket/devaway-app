@@ -28,7 +28,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-black text-xs lg:text-sm font-light">
-                                        <tr v-for="race, index in races" :key="index" class="border-b border-gray-200 hover:bg-gray-100">
+                                        <tr v-for="race, index in races" :key="index" class="border-b border-gray-200 even:bg-gray-100">
                                             <td class="py-2 lg:py-4 w-auto text-center">{{ race.name }}</td>                            
                                             <td class="py-2 lg:py-4 w-auto text-right">{{race.time}}</td> 
                                             <td class="py-2 lg:py-4 w-auto text-center text-green-600">{{race.position}}</td> 
