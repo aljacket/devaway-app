@@ -1,52 +1,28 @@
 <template>
-    <div class="w-screen h-screen flex flex-col justify-center">
-        <div class="w-full flex flex-col items-center justify-center">
-            <div class="bg-white shadow-md rounded-lg my-6 opacity-90 text-sm lg:text-xl font-bold px-4">
-                {{ ix < 0 ? `Driver Standings` : `Race ${index}` }}
-            </div>
-            <div class="w-full flex items-center justify-center">
-                <div 
-                    v-for="sideDirvers, index in sortedDrivers"
-                    :key="index"
-                    class="bg-white shadow-md  my-6 opacity-90"
-                >
-                    <table 
-                        class="w-full table-auto"
-                        :class="[index === 0 ? 'border-r-2': '']"
-                    >
-                        <thead>
-                            <tr class="bg-gray-600 h-auto text-white uppercase text-xs lg:text-ms">
-                                <th class="p-3 text-center"></th>
-                                <th class="p-3 text-center">Name</th>
-                                <th class="p-3 text-left">Team</th>
-                                <th class="p-3 text-left">Time</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-black text-xs lg:text-sm">
-                            <tr v-for="driver, i in sideDirvers" :key="driver._id" class="h-auto border-b border-gray-200 even:bg-gray-100">
-                                <td class="p-3 text-left text-green-600">{{ index === 0 ? i+1 : i+1+sortedDrivers[0].length }}</td>
-                                <td class="p-3 w-auto text-left">
-                                    <div class="flex items-center">
-                                        <div class="mr-2">
-                                            <img class="w-6 h-6 rounded-full" :src="driver.picture"/>
-                                        </div>
-                                        <span>{{driver.name}}</span>
-                                    </div>
-                                </td>
-                                <td class="p-3 w-auto text-left">
-                                    <div class="flex items-center">
-                                        <span>{{driver.team}}</span>
-                                    </div>
-                                </td>
-                                <td class="p-3 w-auto text-left">
-                                    {{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}
-                                </td> 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>                
-            </div>
+    <div class="w-full h-full flex flex-col justify-center overflow-auto">   
+        <div class="opacity-90 w-full text-center mt-6 mb-12 lg:text-xl bg-white">
+            <div>{{ ix < 0 ? `Driver Standings` : `Race ${index}` }}</div>
         </div>
+        <div class="flex flex-wrap px-4">
+            <div 
+                v-for="driver, index in sortedRaces"
+                :key="index"
+                class="w-full sm:w-1/2 md:w-1/3 mb-4 opacity-90 bg-gray-300 even:bg-gray-100"
+            >
+                <div class="flex flex-col">
+                    <div class="flex items-center justify-between px-5 py-2">
+                        <span class="text-green-600">{{index+1}}.</span>
+                        <img class="w-10 h-10 rounded-full" :src="driver.picture"/>
+                    </div>
+                    <div class="flex items-center justify-between px-5 py-2">
+                        <span class="text-gray-600">{{driver.name}}</span>
+                        <span class="text-gray-600">{{driver.team}}</span>
+                    </div>
+                    <div class="text-center mb-2">{{ ix < 0 ? formattedHours(driver.total) : driver.races[ix].time }}</div>
+                </div>
+            </div>            
+        </div>
+        
     </div>   
 </template>
 
@@ -90,21 +66,11 @@
                 })
             }
 
-            const leftSide = computed(() => {
-                return sortedRaces.value.splice(0, half_length.value);
-            });
-
-            const rightSide = computed(() => {
-                return sortedRaces.value.splice(-half_length.value);
-            });
-            
-            const sortedDrivers = [leftSide.value, rightSide.value];
-
             return {
                 ix,
                 drivers,
                 formattedHours,
-                sortedDrivers
+                sortedRaces
             }
         }
     }

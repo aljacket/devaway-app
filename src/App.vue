@@ -1,5 +1,5 @@
 <template>
-    <div class="relative bg-cover bg-center bg-racing w-screen h-screen">
+    <div class="relative bg-cover bg-center bg-racing">
         <Home />
     </div>
 </template>
