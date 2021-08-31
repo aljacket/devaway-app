@@ -23,20 +23,17 @@
        
     </swiper>
     
-    <button 
-        v-if="!isFull"
-        class="absolute bottom-0 right-0 m-4 rounded-full h-20 w-20 shadow-lg z-10 flex items-center justify-center bg-white"
-        @click="full"    
-    >
-        <arrow-expand class="w-10 h-10 text-gray-600" />
-    </button>
+    <full-screen-button :show="isFull">
+        <template #icon>
+            <arrow-expand class="w-10 h-10 text-gray-600"></arrow-expand>
+        </template>
+    </full-screen-button>
 </template>
 
 <script>
     import { ref } from 'vue';
     import TableChart from '@/components/TableChart.vue';
     import DriverInfo from '@/components/DriverInfo.vue';
-    import { openFullscreen }  from '@/utils/fullscreen';
 
     import { Swiper, SwiperSlide } from 'swiper/vue';
     import 'swiper/swiper.min.css';
@@ -44,6 +41,7 @@
     SwiperCore.use([Autoplay]);
 
     import drivers_kart from "@/data/drivers_karts_Front.json";
+    import FullScreenButton from '@/components/FullScreenButton.vue';
 import ArrowExpand from '@/assets/icon/arrowExpand.vue';
 
     export default {
@@ -53,16 +51,13 @@ import ArrowExpand from '@/assets/icon/arrowExpand.vue';
             TableChart,
             Swiper,
             SwiperSlide,
-            ArrowExpand,
+            FullScreenButton,
+                ArrowExpand,
         },
         setup() {
             const isFull = ref(false);                       
             const allDriversKart = ref(drivers_kart);
-            const races = ref(drivers_kart[0].races);
-
-            const full = () => {
-                openFullscreen();
-            }
+            const races = ref(drivers_kart[0].races);            
             
             document.addEventListener("fullscreenchange", function(){
                 // FULLSCREEN DISENGAGED
@@ -84,8 +79,7 @@ import ArrowExpand from '@/assets/icon/arrowExpand.vue';
             return {
                 allDriversKart,
                 races,
-                isFull, 
-                full,
+                isFull,
                 onSwiper
             }
         }
